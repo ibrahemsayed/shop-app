@@ -1,3 +1,5 @@
+
+//****************         Home Model       ***************//
 class HomeData{
   late bool status;
   //late String message;
@@ -8,19 +10,21 @@ class HomeData{
     data=DataModel.fromJson(json['data']);
   }
 }
-
+//****************         Data Model       ***************//
 class DataModel{
   late List<BannerModel> banners =[];
   late List<ProductModel> products = [];
   DataModel.fromJson(Map<String,dynamic> json){
     json['banners'].forEach((element){
-      banners.add(element);
+      banners.add(BannerModel.fromJson(element));
     });
     json['products'].forEach((element){
-      products.add(element);
+      products.add(ProductModel.fromJson(element));
     });
   }
 }
+
+//****************         Banner Model       ***************//
 
 class BannerModel {
   late int id;
@@ -31,6 +35,7 @@ class BannerModel {
   }
 }
 
+//****************         Product Model       ***************//
 class ProductModel {
   late int id;
   late dynamic price;
@@ -51,3 +56,5 @@ class ProductModel {
     inCart=json['in_cart'];
   }
 }
+
+
