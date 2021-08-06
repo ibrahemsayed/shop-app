@@ -16,7 +16,7 @@ class ShopCubit extends Cubit<ShopStates> {
   ShopCubit() : super(InitialState());
   static ShopCubit get(context) => BlocProvider.of(context);
   int index = 0;
-  late HomeData homeData;
+  HomeData? homeData;
   List<Widget> homeScreens = [
     Home(),
     CategoriesScreen(),
@@ -44,7 +44,7 @@ class ShopCubit extends Cubit<ShopStates> {
       token: token,
     ).then((value) {
       homeData = HomeData.fromJson(value.data);
-      
+      print(homeData!.data.banners[0].image);
       emit(GetHomeDataSuccessState());
     }).catchError((error) {
       print(error.toString);
