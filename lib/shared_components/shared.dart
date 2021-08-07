@@ -56,3 +56,20 @@ Widget defaultButton(var function, String text, context) {
     ),
   );
 }
+
+Widget productItem(){
+  return Container(
+    child: Column(
+      children: [
+        Stack(alignment: AlignmentDirectional.bottomStart,
+        children: [
+          Image(image: NetworkImage('url',),fit: BoxFit.cover,
+          
+          ),
+          
+        ],
+        )
+      ],
+    ),
+  );
+}
