@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:udemy_shop_app/models/home_data_model.dart';
 //import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void navigateAndReplecement(context, widget) {
@@ -53,6 +54,38 @@ Widget defaultButton(var function, String text, context) {
           fontWeight: FontWeight.bold,
         ),
       )),
+    ),
+  );
+}
+
+Widget productItem(ProductModel model){
+  return Container(
+    child: Column(
+      children: [
+        Stack(alignment: AlignmentDirectional.bottomStart,
+        children: [
+          Image(image: NetworkImage(model.imageUrl,),fit: BoxFit.cover,
+          
+          ),
+          if(model.discount != 0)
+          Container(
+            child: Text('Discount'),
+            ),
+
+        ],
+        ),
+        Column(
+          children: [
+            Text('${model.name}'),
+            Row(children: [
+              Text(model.price.round()),
+              if(model.discount != 0)
+              Text(model.price.round()),
+              
+            ],)
+          ],
+        ),
+      ],
     ),
   );
 }

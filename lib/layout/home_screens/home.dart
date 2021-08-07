@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:udemy_shop_app/cubit/cubit.dart';
 import 'package:udemy_shop_app/cubit/states.dart';
 import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
+import 'package:udemy_shop_app/shared_components/shared.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -29,7 +30,12 @@ class Home extends StatelessWidget {
                             fit: BoxFit.cover,
                           );
                         }).toList(),
-                      )
+                      ),
+                      SizedBox(
+                        height: 15.0,
+                      ),
+                      productItem(cubit.homeData!.data.products[0]),
+
                     ],
                   )),
               fallbackBuilder: (context) => Center(
