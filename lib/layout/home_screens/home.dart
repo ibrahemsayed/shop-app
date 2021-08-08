@@ -19,40 +19,49 @@ class Home extends StatelessWidget {
               context: context,
               conditionBuilder: (BuildContext context) =>
                   state is! GetHomeDataLoadingState,
-              widgetBuilder: (BuildContext context) => Center(
-                      child: Column(
-                    children: [
-                      CarouselSlider(
-                        options: CarouselOptions(autoPlay: true,viewportFraction: 0.8),
-                        items: cubit.homeData!.data.banners.map((e) {
-                          return Image(
-                            image: NetworkImage('${e.image}',),
-                            fit: BoxFit.cover,
-                          );
-                        }).toList(),
-                      ),
-                      SizedBox(
-                        height: 15.0,
-                      ),
-                      productItem(cubit.homeData!.data.products[0]),
-
-                    ],
-                  )),
+              widgetBuilder: (BuildContext context) => SingleChildScrollView(
+                child: Center(
+                        child: Column(
+                      children: [
+                        CarouselSlider(
+                          options: CarouselOptions(
+                              autoPlay: true, viewportFraction: 1),
+                          items: cubit.homeData!.data.banners.map((e) {
+                            return Image(
+                              image: NetworkImage(
+                                '${e.image}',
+                              ),
+                              fit: BoxFit.cover,
+                            );
+                          }).toList(),
+                        ),
+                        SizedBox(
+                          height: 15.0,
+                        ),
+                        Container(
+                          color: Colors.grey,
+                          //height: 450.0,
+                          child: GridView.count(
+                            physics: ScrollPhysics(),
+                            childAspectRatio: 1/1.6,
+                            shrinkWrap: true,
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 2,
+                              children: List.generate(
+                                cubit.homeData!.data.products.length,
+                                (index) =>
+                                    Container(
+                                      color: Colors.white,
+                                      child: productItem(cubit.homeData!.data.products[index])),
+                              )),
+                        ),
+                      ],
+                    )),
+              ),
               fallbackBuilder: (context) => Center(
                     child: CircularProgressIndicator(),
                   ));
-          /*CarouselSlider(options: CarouselOptions(
-            autoPlay: true,initialPage: 0,
-            height: 250.0,
-          ),
-          items: cubit.homeData!.data.banners.map((e) {
-            return Image(
-              image: NetworkImage('${e.image}'),
-            );
-          }).toList(),
-
-          );*/
-          /**/
+          
         });
   }
 }

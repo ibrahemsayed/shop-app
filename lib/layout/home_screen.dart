@@ -18,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, state) {
           ShopCubit cubit = ShopCubit.get(context);
           return Scaffold(
+            drawer: Drawer(),
             appBar: AppBar(
               title: Text('Salla'),
               actions: [

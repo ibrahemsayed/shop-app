@@ -13,7 +13,7 @@ Widget defaultFormField({
   required IconData icon,
   bool isPassword = false,
   Function? function,
-  String?Function(String?)? validate,
+  String? Function(String?)? validate,
   IconData? suffixIcon,
   var suffixPressed,
 }) {
@@ -42,8 +42,7 @@ Widget defaultButton(var function, String text, context) {
     child: Container(
       decoration: BoxDecoration(
           color: Colors.blueAccent,
-          borderRadius: BorderRadius.all(
-              Radius.circular(10))),
+          borderRadius: BorderRadius.all(Radius.circular(10))),
       width: MediaQuery.of(context).size.width,
       height: 50,
       child: Center(
@@ -58,31 +57,63 @@ Widget defaultButton(var function, String text, context) {
   );
 }
 
-Widget productItem(ProductModel model){
+Widget productItem(ProductModel model) {
   return Container(
     child: Column(
       children: [
-        Stack(alignment: AlignmentDirectional.bottomStart,
-        children: [
-          Image(image: NetworkImage(model.imageUrl,),fit: BoxFit.cover,
-          
-          ),
-          if(model.discount != 0)
-          Container(
-            child: Text('Discount'),
+        Stack(
+          alignment: AlignmentDirectional.bottomStart,
+          children: [
+            Image(
+              image: NetworkImage(
+                model.imageUrl,
+              ),
+              height: 200.0,
+              width: double.infinity,
             ),
-
-        ],
+            if (model.discount != 0)
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                  decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.all(Radius.circular(5))),
+                  child: Text('Discount'),
+                ),
+              ),
+          ],
         ),
         Column(
           children: [
-            Text('${model.name}'),
-            Row(children: [
-              Text(model.price.round()),
-              if(model.discount != 0)
-              Text(model.price.round()),
-              
-            ],)
+            Text(
+              '${model.name}',
+              overflow: TextOverflow.ellipsis,
+            ),
+            Row(
+              children: [
+                Text(
+                  '${model.price.round()}',
+                  softWrap: true,
+                  style: TextStyle(
+                    color: Colors.blue,
+                  ),
+                ),
+                SizedBox(
+                  width: 10.0,
+                ),
+                if (model.discount != 0)
+                  Text(
+                    '${model.price.round()}',
+                    style: TextStyle(decoration: TextDecoration.lineThrough),
+                  ),
+                  Spacer(),
+                  IconButton(
+                  icon: Icon(Icons.favorite_border,color: Colors.grey,),
+                  onPressed: () {},
+                ),
+              ],
+            )
           ],
         ),
       ],
