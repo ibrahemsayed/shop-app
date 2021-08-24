@@ -16,8 +16,8 @@ void main() async {
   Bloc.observer = MyBlocObserver();
   await CacheHelper.init();
   DioHelper.init();
-  bool? onBoarding = CacheHelper.getSharedData(key: 'onBoarding');
-  token = CacheHelper.getSharedData(key: 'token');
+  bool? onBoarding = CacheHelper.getSharedData(key: 'onBoarding') !=null?CacheHelper.getSharedData(key: 'onBoarding'):false;
+  token = CacheHelper.getSharedData(key: 'token')!=null?CacheHelper.getSharedData(key: 'token'):'';
   Widget widget;
   if (onBoarding == true) {
     if (token.isNotEmpty) {
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       //..getHomeData()
-      create: (context) => ShopCubit()..getHomeData(),
+      create: (context) => ShopCubit()..getHomeData()..getCategoriesData()..getfavoritesData(),
       child: BlocConsumer<ShopCubit, ShopStates>(
         listener: (context, state) {},
         builder: (context, state) {
