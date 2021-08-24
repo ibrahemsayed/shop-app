@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rotated_corner_decoration/rotated_corner_decoration.dart';
+import 'package:udemy_shop_app/cubit/cubit.dart';
 import 'package:udemy_shop_app/models/home_data_model.dart';
 //import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -57,66 +59,73 @@ Widget defaultButton(var function, String text, context) {
   );
 }
 
-Widget productItem(ProductModel model) {
-  return Container(
-    child: Column(
-      children: [
-        Stack(
-          alignment: AlignmentDirectional.bottomStart,
-          children: [
-            Image(
-              image: NetworkImage(
-                model.imageUrl,
-              ),
-              height: 200.0,
-              width: double.infinity,
-            ),
-            if (model.discount != 0)
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                  decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.all(Radius.circular(5))),
-                  child: Text('Discount'),
-                ),
-              ),
-          ],
+Widget productItem(ProductModel model,BuildContext context) {
+  return Card(
+    
+    child: Container(
+      padding: const EdgeInsets.all(8.0),
+      foregroundDecoration: model.discount != 0? const RotatedCornerDecoration(
+        color: Colors.red,
+        geometry: const BadgeGeometry(width: 48, height: 48,alignment: BadgeAlignment.topLeft),
+        textSpan: const TextSpan(
+          text: 'Discount',
+          style: TextStyle(
+            fontSize: 10,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-        Column(
-          children: [
-            Text(
-              '${model.name}',
-              overflow: TextOverflow.ellipsis,
-            ),
-            Row(
-              children: [
-                Text(
-                  '${model.price.round()}',
-                  softWrap: true,
-                  style: TextStyle(
-                    color: Colors.blue,
-                  ),
+      ):null,
+      child: Column(
+        children: [
+          Stack(
+            alignment: AlignmentDirectional.bottomStart,
+            children: [
+              Image(
+                image: NetworkImage(
+                  model.imageUrl,
                 ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                if (model.discount != 0)
+                height: 200.0,
+                width: double.infinity,
+              ),
+              
+            ],
+          ),
+          Column(
+            children: [
+              Text(
+                '${model.name}',
+                overflow: TextOverflow.ellipsis,
+              ),
+              Row(
+                children: [
                   Text(
                     '${model.price.round()}',
-                    style: TextStyle(decoration: TextDecoration.lineThrough),
+                    softWrap: true,
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold
+                    ),
                   ),
-                  Spacer(),
-                  IconButton(
-                  icon: Icon(Icons.favorite_border,color: Colors.grey,),
-                  onPressed: () {},
-                ),
-              ],
-            )
-          ],
-        ),
-      ],
+                  SizedBox(
+                    width: 10.0,
+                  ),
+                  if (model.discount != 0)
+                    Text(
+                      '${model.oldPrice.round()}',
+                      style: TextStyle(decoration: TextDecoration.lineThrough,color: Colors.grey),
+                    ),
+                    Spacer(),
+                    IconButton(
+                    icon: CircleAvatar(child: Icon(Icons.favorite,color: Colors.white,),
+                    backgroundColor: ShopCubit.get(context).favorites[model.id]!?Colors.red:Colors.grey,),
+                    onPressed: (){ShopCubit.get(context).toggleFavorite(model.id);},
+                  ),
+                ],
+              )
+            ],
+          ),
+        ],
+      ),
     ),
   );
 }
